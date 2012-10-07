@@ -1,0 +1,332 @@
+\documentclass{beamer}
+
+\usepackage{listings}
+\usepackage{inconsolata}
+
+\usetheme{Pittsburgh}
+
+\title{Introduction to Programming with Python}
+\author{Guy Dickinson}
+\institute{NYC Resistor \\
+\texttt{guy@gdickinson.co.uk} \\
+\texttt{@gdickinson}}
+
+% Source listing controls
+\lstset{
+  basicstyle=\color{blue},
+  frame=single,
+  language=Python,
+  showlines=true,
+  showstringspaces=false,
+  tabsize=2
+  %columns = fixed
+}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Hello}
+  Here's what I'd like to do today:
+  \begin{itemize}
+    \item Give you an overview of basic programming concepts 
+    \item Give you a foundation of understanding of Python
+    \item Give you the tools you need to continue to explore on your own
+  \end{itemize}
+  Here's what I can't do in one day:
+  \begin{itemize}
+    \item Transform you into a rockstar software engineer
+    \item Make you ready to interview at Google/Facebook/wherever
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{What you should have with you}
+  You should have a computer with a UNIX-like environment on it already, like Linux or MacOS X. A VM is fine, too. Trying to do this class using Windows is an exercise in pain and suffering.
+\end{frame}
+
+\begin{frame}{What I Assume}
+  It's always hard to gauge where students are coming from, but I assume the following:
+  \begin{itemize}
+    \item A strong intuitive understanding of computing/computers. It's especially helpful if you've used a terminal before.
+    \item A willingness to learn and cope with frustration. Programming is hard and non-intuitive. Learning to program well is very, very hard and even less intuitive.
+    \item No prior programming experience.
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{What is a Programming Language?}
+  \begin{itemize}
+    \item Computer hardware knows nothing about Python. Or C. Or Java.
+    \item Processors only know about \emph{Machine Code}.
+    \item Programming languages are fed to an intermediate program called a \emph{compiler} or \emph{interpreter}
+    to be turned into machine code that your computer can understand.
+    \item Programming languages help us to hide the tedious nature of machine code so as a developer, you don't need to worry about it.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{The interpreter in action}
+  \begin{itemize}
+    \item Let's fire up the interpreter. Open a terminal and run this: \\
+      \texttt{\$ python}
+    \item You should get a prompt like this: \\
+      \texttt{Python 2.7.1 (r271:86832, Jul 31 2011, 19:30:53) \\ >>>} 
+    \item This is called a Read-Eval-Reply Loop (REPL); you can type code in here and each line will be \emph{evaluated} and the results printed back to you.
+    \item This is the point in the proceedings where we do the necessary, but not sufficient ``Hello world!'' program: \\
+      \texttt{>>> print("Hello world!")\\Hello world!}
+    \item We can also use Python as a desk calculator. Try \lstinline{1+1}, \lstinline{2.9 * 9}, \lstinline{2 ** 16}, \lstinline{98 \% 3}...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Basic Syntax}
+  \begin{itemize}
+    \item Statements are ended by a newline. You don't need to end things with a semicolon like in C or Java.
+    \item Anything between a \lstinline!\#! and the end of a line does nothing. This is a \emph{comment}.
+    \item Everything is case sensitive. \lstinline{Print} is different than \lstinline{print}.
+    \item Indentation matters. More on this later.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Variables}
+  \begin{itemize}
+    \item We've done some basic operations on numbers (and one on a string).
+    \item We can store the results in memory for later use instead of just having them printed out.
+    \item The equals sign does this for us. The \emph{value} on the right of the equals sign is evaluated and assigned to the name on the left.
+    \item The variable can be used anywhere the original value could have been used.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Storing Programs in Files}
+  \begin{itemize}
+    \item You don't have to keep typing everything into the interpreter; you can store your source code in a file instead.
+    \item Files containing Python code should: \\
+    \begin{itemize}
+      \item Start with the special incantation \lstinline{\#!/usr/bin/python} on the first line.
+      \item Be named with a suffix \texttt{.py}, like \texttt{helloworld.py} 
+    \end{itemize}
+    \item You can then run your code with \texttt{\$ python helloworld.py}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{A boring first program}
+  \lstinputlisting{CodeExamples/example1.py}
+  Some questions:
+  \begin{enumerate}
+    \item What does this code do?
+    \item What's \lstinline{raw_input()}?
+    \item What's the \lstinline{%} thingy in the \lstinline{print()}?
+    \item What happens when we reach the end of the code?
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Conditionals}
+  Suppose we want the user to guess some sort of secret. How would we go about that?
+  We'll need a \emph{conditional}. The simplest one is \lstinline{if}. It looks like this:
+
+  \begin{lstlisting}
+if ( some_condition ):
+  # Do stuff
+  # Note the indentation; it matters.
+else:
+  # Do this instead
+# Keep going here
+  \end{lstlisting}
+  What's a condition? It's an expression which must evaluate to true or false. True and False are \emph{boolean} values.
+  Everything in Python is considered to be ``true'' for the purposes of conditionals except \lstinline{False}, \lstinline{None}, and \lstinline{[]} (the empty list which we'll see more of later).
+  
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Comparisons}
+
+  How do we get a boolean value? We can use a comparison. Here are some common ones:\\
+
+  \begin{itemize}
+    \item \lstinline!>! : Greater than
+    \item \lstinline!<! : Less than
+    \item \lstinline!==! : Equal to
+    \item \lstinline^!=^ : Not equal to (\lstinline^not^ negates any boolean) 
+  \end{itemize}
+
+  With variables, comparisons, and conditionals we have enough to implement a secret-guessing program.
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Secret Guessing}
+
+  \lstinputlisting{CodeExamples/example2.py}
+  
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{More than one guess}
+  Suppose we wanted to allow for more than one guess before the program exits. How do we do that?
+  We'll need another type of conditional called a \lstinline{while} loop. This is its basic structure:
+
+  \begin{lstlisting}
+while (some_condition):
+  # Do this
+# Once some_condition isn't true, carry on here.
+  \end{lstlisting}
+
+  Questions:
+  \begin{enumerate}
+    \item How would you allow for as many guesses as you wanted?
+    \item A fixed number of guesses?
+  \end{enumerate}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle {Lists}
+  \begin{itemize}
+    \item So far, we've seen numbers and strings. What if we want more than one of those?
+    \item Lists can contain a arbitrary number of anything. We make them like this:
+    \lstinline{ mylist = [1, 2, -0.5, 'a', "Hello!"]}
+    \item We can get to the stuff in there like this: \\
+    \begin{lstlisting}
+      print(mylist[0]) # Outputs "1"
+      mylist[1] = 500 # Sets a new value
+    \end{lstlisting}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle {Dictionaries}
+\begin{itemize}
+  \item Dictionaries are composed of \emph{key-value} pairs. They behave quite like lists except instead of using numbers based from 0, they use any object to get at its contents:\\
+  
+  \begin{lstlisting}
+    personinfo = {}
+    personinfo["firstname"] = "Guy"
+    personinfo["lastname"] = "Dickinson"
+    personinfo["hacker"] = true
+    personinfo.has_key["firstname"] # true
+  \end{lstlisting}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle {Functions}
+  What is a function?
+  A function hides away operations so you can use them again. This is best shown by example:
+  \begin{lstlisting}
+    def plusone(x):
+      return x + 1
+    plusone(x)
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle {Functions: Terminology}
+  \begin{itemize}
+    \item A function has 0 or more \emph{arguments}, and \emph{returns} 0 or 1 things.
+    \item ``Making a function go'' is known as \emph{calling} or \emph{invoking} a function.
+    \item Functions can call other functions, and can even call themselves. The latter is called \emph{recursion}. 
+  \end{itemize}
+  Another Example:
+  \begin{lstlisting}
+    def factorial(x):
+      if (x == 1):
+        return x
+      else:
+        return x * factorial(x - 1)
+    factorial(10) # 3628800
+  \end{lstlisting}
+  
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle {Objects}
+  \begin{itemize}
+    \item Objects glue together data and the functions which operate on that data.
+    \item Suppose we wanted to model a car which has a direction, a speed, and number of occupants. How would we do that, in a world without objects?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Objects}
+  Pretty tediously. Maybe we can do something like this:
+    \begin{lstlisting}
+car_speed = 0
+car_occupants = 0
+car_dirction = 0
+
+def get_in():
+  car_occupants += 1
+
+def get_out():
+  car_occupants -= 1
+
+def steer(directionchange):
+  car_direction =
+    (car_direction + directionchange) % 360
+
+    \end{lstlisting}
+  What's wrong with this?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Objects}
+  \begin{lstlisting}
+class Car:
+  def __init__(self):
+    self.speed = 0
+    self.occupants = 0
+    self.direction = 0
+
+  def steer(self, dirchange):
+    self.direction =
+      (self.direction + dirchange) % 360
+c = Car()
+c.steer(-5)
+c.direction # 355
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Objects}
+  Because now we're in object-oriented programming land, the same stuff has different names:
+  \begin{itemize}
+    \item Functions in an object are called \emph{methods}
+    \item Variables are called \emph{attributes} or \emph{fields} 
+  \end{itemize}
+  Also there are some new things:
+  \begin{itemize}
+    \item A \emph{class} is the blueprint for an object.
+    \item The \lstinline{__init__()} method is special. It is called a \emph{constructor}. It is always called when you create an object.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Objects}
+  Everything in Python is an object. \\
+  This is so important it bears repeating. \\
+  Everything in Python is an object.\\
+\end{frame}
+
+\begin{frame}[fragile]
+  Even simple things like strings are objects. They have methods, like \lstinline{upper()}:
+  \begin{lstlisting}
+    name = "nyc resistor"
+    name.upper() # NYC RESISTOR
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Documentation}
+  You don't have to memorize all the methods that every object has. That would be impossible.\\
+  You can make Python tell you.
+  \begin{lstlisting}
+>>> help(str)    
+  \end{lstlisting}
+
+\end{frame}
+
+\end{document}
